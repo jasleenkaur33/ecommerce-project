@@ -1,0 +1,17 @@
+<div class="container py-5">
+  <div class="card shadow p-4">
+    <h1 class="text-center mb-4"><%= category.new_record? ? "Add New Category" : "Edit Category" %></h1>
+
+    <%= form_with model: [:admin, category], local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :name, "Category Name", class: "form-label" %>
+        <%= form.text_field :name, class: "form-control", placeholder: "Enter category name" %>
+      </div>
+
+      <div class="text-center mt-4">
+        <%= form.submit category.new_record? ? "Create Category" : "Update Category", class: "btn btn-primary btn-lg" %>
+        <%= link_to "Cancel", admin_categories_path, class: "btn btn-secondary btn-lg ms-2" %>
+      </div>
+    <% end %>
+  </div>
+</div>

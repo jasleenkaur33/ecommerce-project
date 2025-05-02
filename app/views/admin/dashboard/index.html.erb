@@ -1,0 +1,48 @@
+<div class="container py-4">
+  <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card text-center border-primary">
+        <div class="card-body">
+          <h5 class="card-title">Total Products</h5>
+          <p class="card-text display-6 text-primary"><%= Product.count %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center border-success">
+        <div class="card-body">
+          <h5 class="card-title">Total Categories</h5>
+          <p class="card-text display-6 text-success"><%= Category.count %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center border-info">
+        <div class="card-body">
+          <h5 class="card-title">Total Orders</h5>
+          <p class="card-text display-6 text-info"><%= Order.count %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center border-warning">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="card-text display-6 text-warning"><%= User.count %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Management Links -->
+  <div class="text-center">
+    <div class="btn-group" role="group" aria-label="Admin Navigation">
+      <%= link_to "Manage Products", admin_products_path, class: "btn btn-primary" %>
+      <%= link_to "Manage Categories", admin_categories_path, class: "btn btn-success" %>
+      <%= link_to "View Orders", admin_orders_path, class: "btn btn-info" %>
+    </div>
+  </div>
+</div>

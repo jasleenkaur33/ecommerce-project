@@ -1,0 +1,49 @@
+<div class="container py-4">
+  <h1 class="text-center mb-4">Your Orders</h1>
+
+  <% if @orders.any? %>
+    <!-- Orders Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
+          <tr class="text-center">
+            <th scope="col">Order ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr class="text-center">
+              <td class="align-middle">
+                <strong>#<%= order.id %></strong>
+              </td>
+              <td class="align-middle">
+                <%= order.created_at.strftime("%B %d, %Y") %>
+              </td>
+              <td class="align-middle ">
+                <span class="badge <%= status_badge_class(order.status) %>">
+                  <%= order.status.humanize %>
+                </span>
+              </td>
+              <td class="align-middle text-center">
+                <span class="fw-bold text-success">$<%= order.total_amount %></span>
+              </td>
+              <td class="align-middle text-center">
+                <%= link_to "View Details", order_path(order), class: "btn btn-sm btn-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <!-- No Orders Message -->
+    <div class="text-center mt-5">
+      <p class="fs-4">You have no orders yet.</p>
+      <%= link_to "Start Shopping", products_path, class: "btn btn-primary btn-lg mt-3" %>
+    </div>
+  <% end %>
+</div>

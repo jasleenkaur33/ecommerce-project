@@ -1,0 +1,38 @@
+<h1 class="mb-4 text-center">Products in <%= @category.name %></h1>
+
+<!-- Products Grid -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <% if @products.any? %>
+    <% @products.each do |product| %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <!-- Product Image -->
+          <% if product.image.attached? %>
+            <%= image_tag product.image, class: "card-img-top", alt: product.name %>
+          <% else %>
+            <%= image_tag "placeholder.jpg", class: "card-img-top", alt: "Product image" %>
+          <% end %>
+          <div class="card-body">
+            <!-- Product Name -->
+            <h5 class="card-title">
+              <%= link_to product.name, product_path(product), class: "text-decoration-none text-dark" %>
+            </h5>
+            <!-- Product Price -->
+            <p class="card-text"><strong>Price: $<%= product.price %></strong></p>
+            <!-- Product Description -->
+            <p class="card-text"><%= product.description.truncate(100) %></p>
+            <!-- View Details Button -->
+            <%= link_to "View Details", product_path(product), class: "btn btn-primary btn-sm w-100" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No products found in this category.</p>
+  <% end %>
+</div>
+
+<!-- Back Button -->
+<div class="mt-4 text-center">
+  <%= link_to "Back to Categories", categories_path, class: "btn btn-secondary" %>
+</div>

@@ -1,0 +1,30 @@
+<div class="product-section">
+  <div class="product-container">
+    <!-- Product Image -->
+    <div class="product-image">
+      <% if @product.image.attached? %>
+        <%= image_tag @product.image, class: "img-fluid shadow-lg", alt: @product.name %>
+      <% end %>
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-info">
+      <h1 class="product-title"><%= @product.name %></h1>
+      <p class="product-price"><strong>Price:</strong> $<%= @product.price %></p>
+      <p class="product-category"><strong>Category:</strong> <%= @product.category.name %></p>
+      <p class="product-description"><strong>Description:</strong> <%= @product.description %></p>
+
+      <!-- Add to Cart Form -->
+      <%= form_with url: add_item_cart_path, method: :post, local: true, class: "add-to-cart-form" do |form| %>
+        <%= form.hidden_field :product_id, value: @product.id %>
+        <div class="form-group mb-3">
+          <%= form.label :quantity, "Quantity:" %>
+          <%= form.number_field :quantity, value: 1, min: 1, class: "form-control" %>
+        </div>
+        <%= form.submit "Add to Cart", class: "btn btn-primary btn-lg w-100" %>
+      <% end %>
+      
+      <%= link_to "Back to Products", products_path, class: "btn btn-outline-secondary mt-3 w-100" %>
+    </div>
+  </div>
+</div>

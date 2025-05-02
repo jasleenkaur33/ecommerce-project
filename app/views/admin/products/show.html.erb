@@ -1,0 +1,13 @@
+<h1><%= @product.name %></h1>
+
+<% if @product.image.attached? %>
+  <%= image_tag @product.image, class: "img-fluid", alt: @product.name %>
+<% else %>
+  <p>No image available for this product.</p>
+<% end %>
+
+<p><strong>Price:</strong> $<%= @product.price %></p>
+<p><strong>Description:</strong> <%= @product.description %></p>
+<p><strong>Category:</strong> <%= @product.category.name %></p>
+
+<%= link_to "Back to Products", admin_products_path, class: "btn btn-secondary" %>

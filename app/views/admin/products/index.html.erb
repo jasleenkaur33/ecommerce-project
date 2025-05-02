@@ -1,0 +1,48 @@
+<div class="container py-4">
+  <h1 class="text-center mb-4">Manage Products</h1>
+
+  <!-- Add Product Button -->
+  <div class="text-end mb-3">
+    <%= link_to "Add New Product", new_admin_product_path, class: "btn btn-success btn-lg" %>
+  </div>
+
+  <!-- Product Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th class="text-center">ID</th>
+          <th>Name</th>
+          <th class="text-center">Image</th>
+          <th class="text-center">Price</th>
+          <th>Category</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td class="text-center"><%= product.id %></td>
+            <td><%= product.name %></td>
+            <td class="text-center">
+              <% if product.image.attached? %>
+                <%= image_tag product.image.variant(resize_to_limit: [80, 80]), class: "img-thumbnail", alt: product.name %>
+              <% else %>
+                <span class="text-muted">No Image</span>
+              <% end %>
+            </td>
+            <td class="text-center">$<%= product.price %></td>
+            <td><%= product.category.name %></td>
+            <td class="text-center">
+              <div class="btn-group" role="group">
+                <%= link_to "View", admin_product_path(product), class: "btn btn-sm btn-info" %>
+                <%= link_to "Edit", edit_admin_product_path(product), class: "btn btn-sm btn-warning" %>
+                <%= button_to "Delete", admin_product_path(product), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold">Manage Orders</h1>
+    <%= link_to "Dashboard", admin_dashboard_path, class: "btn btn-secondary btn-sm" %>
+  </div>
+
+  <% if @orders.any? %>
+    <table class="table table-hover table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Order ID</th>
+          <th scope="col">User</th>
+          <th scope="col">Status</th>
+          <th scope="col">Total Price</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td>#<%= order.id %></td>
+            <td><%= order.user.email %></td>
+            <td>
+              <span class="badge <%= order.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %>">
+                <%= order.status.humanize %>
+              </span>
+            </td>
+            <td>$<%= number_with_precision(order.total_price, precision: 2) %></td>
+            <td>
+              <%= link_to "View", admin_order_path(order), class: "btn btn-sm btn-primary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-warning text-center">
+      <p>No orders found.</p>
+      <%= link_to "Start Adding Products", new_admin_product_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,28 @@
+<h1 class="mb-4 text-center">Product Categories</h1>
+
+<!-- Categories Grid -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <% @categories.each do |category| %>
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <!-- Category Image -->
+
+        <div class="card-body text-center">
+          <!-- Category Name -->
+          <h5 class="card-title">
+            <%= link_to category.name, category_path(category), class: "stretched-link text-decoration-none text-dark fw-bold" %>
+          </h5>
+          <!-- Product Count -->
+          <p class="card-text">
+            <%= pluralize(category.products.count, "product") %> available
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Back Button -->
+<div class="mt-4 text-center">
+  <%= link_to "Back to Products", products_path, class: "btn btn-secondary" %>
+</div>

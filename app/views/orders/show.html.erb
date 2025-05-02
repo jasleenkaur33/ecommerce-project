@@ -1,0 +1,86 @@
+<div class="container py-4">
+  <h1 class="text-center mb-4">Order Details</h1>
+
+  <!-- Order Summary -->
+  <div class="mb-5">
+    <h2 class="text-primary">Order Summary</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Order ID:</strong> <%= @order.id %></p>
+        <p><strong>Date:</strong> <%= @order.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Status:</strong> 
+          <span class="badge <%= status_badge_class(@order.status) %>">
+            <%= @order.status.humanize %>
+          </span>
+        </p>
+        <p><strong>Total:</strong> 
+          <span class="fw-bold text-success">$<%= @order.total_amount %></span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taxes Section -->
+  <div class="mb-5">
+    <h2 class="text-primary">Taxes</h2>
+    <% taxes = @order.tax_breakdown %>
+    <p><strong>GST:</strong> $<%= taxes[:gst] %></p>
+    <p><strong>PST:</strong> $<%= taxes[:pst] %></p>
+    <p><strong>HST:</strong> $<%= taxes[:hst] %></p>
+    <p><strong>Total Tax:</strong> $<%= taxes[:total_tax] %></p>
+    <p><strong>Total Price:</strong> $<%= taxes[:total_price] %></p>
+  </div>
+
+  <!-- Items Section -->
+  <div class="mb-5">
+    <h2 class="text-primary">Items</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="table-light">
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_items.each do |item| %>
+            <tr>
+              <td>
+                <% if item.product.image.attached? %>
+                  <%= image_tag item.product.image.variant(resize_to_limit: [60, 60]), class: "rounded me-2", alt: item.product.name %>
+                <% else %>
+                  <%= image_tag "placeholder.jpg", class: "rounded me-2", alt: "Product image" %>
+                <% end %>
+                <%= link_to item.product.name, product_path(item.product), class: "text-decoration-none text-dark fw-bold" %>
+              </td>
+              <td class="text-center"><%= item.quantity %></td>
+              <td class="text-center">$<%= item.price %></td>
+              <td class="text-center">$<%= item.quantity * item.price %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Shipping Address -->
+  <div class="mb-4">
+    <h2 class="text-primary">Shipping Address</h2>
+    <p class="mb-0"><strong>Address:</strong></p>
+    <p>
+      <%= @order.address.line1 %><br>
+      <%= @order.address.line2.present? ? @order.address.line2 + "<br>".html_safe : "" %>
+      <%= @order.address.city %>, <%= @order.address.province.name %><br>
+      <%= @order.address.postal_code %>
+    </p>
+  </div>
+
+  <!-- Back to Orders Button -->
+  <div class="text-center mt-4">
+    <%= link_to "Back to Orders", orders_path, class: "btn btn-secondary btn-lg" %>
+  </div>
+</div>
