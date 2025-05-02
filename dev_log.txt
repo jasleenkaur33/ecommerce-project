@@ -1,1 +1,2 @@
 # Feature 1 - Added basic models
+# Feature 2 - Setup checkout system
